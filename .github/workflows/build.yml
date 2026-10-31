@@ -30,6 +30,7 @@ jobs:
         with:
           name: HDRPilot-win-x64-unsigned
           path: |
+            artifacts/*.exe
             artifacts/*.zip
             artifacts/*.sha256
           if-no-files-found: error

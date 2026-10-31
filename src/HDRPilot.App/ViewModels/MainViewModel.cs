@@ -44,6 +44,7 @@ public sealed class MainViewModel : ObservableObject
     public string Status { get => status; set => Set(ref status, value); }
     public string Search { get => filter; set { if (Set(ref filter, value)) ProfileView.Refresh(); } }
     public string LogFilter { get => logFilter; set { if (Set(ref logFilter, value)) ActivityView.Refresh(); } }
+    public string ApplicationVersion => typeof(MainViewModel).Assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), false).OfType<System.Reflection.AssemblyInformationalVersionAttribute>().FirstOrDefault()?.InformationalVersion.Split('+')[0] ?? "unknown";
     public string Automation => automation;
     public string ActiveRule => rule;
     public string ActiveApplication => active;
@@ -164,7 +165,7 @@ public sealed class MainViewModel : ObservableObject
         {
             var picker = new Microsoft.Win32.SaveFileDialog { Filter = "Text report|*.txt", FileName = "HDRPilot-diagnostics.txt" };
             if (picker.ShowDialog() != true) return;
-            var report = $"HDR Pilot 0.1.0\nWindows {Environment.OSVersion.Version}\n{Metrics}\n{Automation}\n" + string.Join("\n", Displays.Select(d => $"{d.Name}: {d.Summary}; {d.Status}; {d.Limitation}")) + "\n\n" + string.Join("\n", Activity.Select(a => a.Text));
+            var report = $"HDR Pilot {ApplicationVersion}\nWindows {Environment.OSVersion.Version}\n{Metrics}\n{Automation}\n" + string.Join("\n", Displays.Select(d => $"{d.Name}: {d.Summary}; {d.Status}; {d.Limitation}")) + "\n\n" + string.Join("\n", Activity.Select(a => a.Text));
             await System.IO.File.WriteAllTextAsync(picker.FileName, report); Status = "Diagnostics exported. Review application names before sharing.";
         });
         WindowsSettingsCommand = new RelayCommand(_ => Process.Start(new ProcessStartInfo("ms-settings:display") { UseShellExecute = true }));

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 — 2026-10-31
+
+Added a directly downloadable self-contained Windows EXE and its SHA-256 checksum to GitHub Releases and CI artifacts. The full ZIP remains available for the optional browser companion and diagnostics. The UI now displays the actual build version.
+
 ## 0.1.0 — 2026-10-31
 
 First HDR Pilot release: renamed the application, assemblies, solution, browser host, storage paths and documentation; updated the P lettermark and dashboard screenshot. Added Windows validation and tag-triggered GitHub Releases with locked dependencies, packaged-executable checks and SHA-256 verification.

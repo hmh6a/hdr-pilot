@@ -37,6 +37,7 @@ jobs:
         with:
           name: hdr-pilot-win-x64
           path: |
+            artifacts/*.exe
             artifacts/*.zip
             artifacts/*.sha256
           if-no-files-found: error
@@ -68,8 +69,8 @@ jobs:
           prerelease=()
           if [[ "$RELEASE_TAG" == *-* ]]; then prerelease=(--prerelease); fi
           cat > release-notes.txt <<'NOTES'
-          Windows 11 x64 portable release. Extract the ZIP and run HDRPilot.exe; no separate .NET installation is needed.
+          Windows 11 x64 portable release. Download and run the EXE directly; no installer, ZIP extraction or separate .NET installation is needed.
 
-          The package includes the browser companion, diagnostics and SHA-256 checksums. This build is unsigned. See README.md for compatibility and hardware-validation limits.
+          For the optional browser companion and diagnostics, download and extract the full ZIP package. SHA-256 checksums are provided for both downloads. This build is unsigned. See README.md for compatibility and hardware-validation limits.
           NOTES
-          gh release create "$RELEASE_TAG" --verify-tag --title "HDR Pilot $RELEASE_TAG" --notes-file release-notes.txt --generate-notes "${prerelease[@]}" HDRPilot-*.zip HDRPilot-*.zip.sha256
+          gh release create "$RELEASE_TAG" --verify-tag --title "HDR Pilot $RELEASE_TAG" --notes-file release-notes.txt --generate-notes "${prerelease[@]}" HDRPilot-*.exe HDRPilot-*.exe.sha256 HDRPilot-*.zip HDRPilot-*.zip.sha256

@@ -1,5 +1,6 @@
-param([string]$Version = '0.1.0')
+param([string]$Version = '')
 $ErrorActionPreference = 'Stop'
+if (!$Version) { $Version = ([xml](Get-Content (Join-Path $PSScriptRoot '../Directory.Build.props') -Raw)).Project.PropertyGroup.Version }
 if ($Version -notmatch '^\d+\.\d+\.\d+([-.][a-zA-Z0-9.]+)?$') { throw 'Invalid version' }
 $root = Split-Path -Parent $PSScriptRoot
 $runner = Join-Path $PSScriptRoot 'dotnet.ps1'
@@ -30,6 +31,9 @@ try {
     $exe = Join-Path $destination 'HDRPilot.exe'
     $metadata = [Diagnostics.FileVersionInfo]::GetVersionInfo($exe)
     if ($metadata.ProductName -ne 'HDR Pilot' -or $metadata.ProductVersion -notlike "$Version*") { throw 'Incorrect packaged application identity' }
+    $standalone = Join-Path $artifacts "HDRPilot-$Version-win-x64.exe"
+    Copy-Item -LiteralPath $exe -Destination $standalone -Force
+    "{0}  {1}" -f (Get-FileHash -LiteralPath $standalone -Algorithm SHA256).Hash.ToLowerInvariant(), ([IO.Path]::GetFileName($standalone)) | Set-Content -LiteralPath ($standalone + '.sha256') -Encoding ascii
     $sums = Get-ChildItem -LiteralPath $destination -Filter *.exe | Sort-Object Name | ForEach-Object { "{0}  {1}" -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $_.Name }
     $sums | Set-Content -LiteralPath (Join-Path $destination 'SHA256SUMS.txt') -Encoding ascii
     $zip = Join-Path $artifacts "HDRPilot-$Version-win-x64.zip"
@@ -37,4 +41,5 @@ try {
     "{0}  {1}" -f (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant(), ([IO.Path]::GetFileName($zip)) | Set-Content -LiteralPath ($zip + '.sha256') -Encoding ascii
     Write-Output "Portable release: $destination"
     Write-Output "ZIP: $zip"
+    Write-Output "Standalone EXE: $standalone"
 } finally { Pop-Location }
