@@ -6,7 +6,7 @@ Independent, local Windows HDR automation built with C#, .NET 10, and WPF.
 
 [Download for Windows](https://github.com/hmh6a/hdr-pilot/releases/latest) · [Build status](https://github.com/hmh6a/hdr-pilot/actions)
 
-**Release status: 0.1.1, unsigned portable build.** Real Windows HDR switching and profile-driven restoration have been exercised on the development PC. This is not a claim of production certification across GPU vendors. See [validation](docs/VALIDATION.md) and [limitations](#known-limitations).
+**Release status: 0.1.2, unsigned Windows build.** Real Windows HDR switching and profile-driven restoration have been exercised on the development PC. This is not a claim of production certification across GPU vendors. See [validation](docs/VALIDATION.md) and [limitations](#known-limitations).
 
 ## Features
 
@@ -26,7 +26,9 @@ Independent, local Windows HDR automation built with C#, .NET 10, and WPF.
 
 Windows 11 x64, a local interactive desktop session, and a compatible display/driver for HDR. The portable release contains its own .NET runtime. Administrator access is not required. HDR support over Remote Desktop is not assumed.
 
-Download and run `HDRPilot-0.1.1-win-x64.exe` directly for the standalone desktop app. No extraction or separate .NET installation is needed. For the optional browser companion and diagnostics, extract `HDRPilot-0.1.1-win-x64.zip` into a writable, trusted local folder and run `HDRPilot.exe`. Keep the native host and browser files in that folder if using the companion. No Windows service is installed. The build is unsigned; verify its source and checksums. Do not disable Windows security protections to run it.
+**Recommended:** download `HDRPilot-0.1.2-win-x64-Setup.exe`, choose your installation folder on the destination page, then click Install. The installer adds a Start menu shortcut and an Apps & features uninstall entry; a desktop shortcut is optional. It installs for the current user and includes the browser companion and diagnostics. Choose any folder your account can write to. No separate .NET installation is needed.
+
+For portable use, run `HDRPilot-0.1.2-win-x64.exe` directly, or extract the full `HDRPilot-0.1.2-win-x64.zip` and run `HDRPilot.exe`. Keep the native host and browser files in that folder if using the companion. No Windows service is installed. The build is unsigned; verify its source and checksums. Do not disable Windows security protections to run it.
 
 ## Usage
 
@@ -90,7 +92,9 @@ VLC, MPC-HC, MPC-BE, mpv, PotPlayer and Windows Media Player can use basic execu
 
 ## Uninstallation
 
-Exit HDR Pilot from its tray. Disable Start with Windows first, or remove its named HKCU Run value. Run `scripts/Unregister-BrowserBridge.ps1` if registered and remove the browser extension. Delete the extracted portable folder. Settings/logs remain unless you choose to delete the HDRPilot folders under AppData and LocalAppData. No system-wide service or driver needs removal.
+For an installed copy, exit HDR Pilot from its tray and uninstall HDR Pilot in Windows Settings → Apps → Installed apps. The uninstaller preserves settings and logs; it removes the startup entry only if that entry points to the installation being removed. Unregister any manually configured browser bridge before uninstalling.
+
+For a portable copy, exit HDR Pilot from its tray. Disable Start with Windows first, or remove its named HKCU Run value. Run `scripts/Unregister-BrowserBridge.ps1` if registered and remove the browser extension. Delete the extracted portable folder. Settings/logs remain unless you choose to delete the HDRPilot folders under AppData and LocalAppData. No system-wide service or driver needs removal.
 
 ## Development
 

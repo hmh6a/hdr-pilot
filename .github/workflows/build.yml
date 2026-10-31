@@ -26,6 +26,9 @@ jobs:
       - name: Build, test, and package unsigned portable artifacts
         shell: pwsh
         run: ./scripts/Package.ps1
+      - name: Verify installation, upgrade and uninstall
+        shell: pwsh
+        run: ./scripts/Test-Installer.ps1 -Installer (Get-ChildItem artifacts/*-Setup.exe).FullName
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: HDRPilot-win-x64-unsigned

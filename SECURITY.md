@@ -14,14 +14,14 @@ HDR Pilot runs as the current user. It has no telemetry, analytics SDK, advertis
 
 ## Registry and files
 
-Optional startup uses only `HKCU\Software\Microsoft\Windows\CurrentVersion\Run\HDRPilot`. Optional native host registration uses `HKCU\Software\Google\Chrome\NativeMessagingHosts\org.hdrpilot.video` and `HKCU\Software\Microsoft\Edge\NativeMessagingHosts\org.hdrpilot.video`. Launcher/uninstall registry access is read-only. No NVIDIA registry values are written. Config/log/host-manifest paths are documented in the README; Windows user-profile ACLs provide their baseline isolation.
+Optional startup uses only `HKCU\Software\Microsoft\Windows\CurrentVersion\Run\HDRPilot`. Optional native host registration uses `HKCU\Software\Google\Chrome\NativeMessagingHosts\org.hdrpilot.video` and `HKCU\Software\Microsoft\Edge\NativeMessagingHosts\org.hdrpilot.video`. The application only reads launcher/uninstall registry entries. The per-user Setup executable writes its own Apps & features registration in HKCU, copies files into the selected writable folder and creates shortcuts. Its uninstaller preserves user settings and removes the startup value only when it points to that installation. No NVIDIA registry values are written. Config/log/host-manifest paths are documented in the README; Windows user-profile ACLs provide their baseline isolation.
 
 ## Releases and updates
 
-No official repository or publisher certificate was supplied. The update feature is deliberately disabled, including periodic checks. Releases are unsigned local artifacts. SHA-256 verifies integrity against a known digest, not publisher identity; a co-hosted checksum cannot authenticate a compromised release.
+Official releases are published at https://github.com/hmh6a/hdr-pilot/releases. A publisher certificate is not configured. The update feature is deliberately disabled, including periodic checks. Installers and portable builds are unsigned. SHA-256 verifies integrity against a known digest, not publisher identity; a co-hosted checksum cannot authenticate a compromised release. The build downloads the official Inno Setup compiler with a pinned version and SHA-256 digest; the application and installer require no download at runtime.
 
 Before enabling future updates, maintainers must configure a fixed official HTTPS repository and trusted signing identity, verify Authenticode chain/revocation and publisher identity (or an authenticated signed manifest with a pinned key), compare versions, require explicit approval, stage/verify before activation, and retain a rollback copy. Do not build an auto-installer around release-page checksums. Signing keys must not be stored in the repository or embedded in the application.
 
 ## Reporting
 
-This local project has no configured public security contact or hosting repository. Report findings privately to its maintainer through an established trusted channel. Do not publish secrets or personal logs. Include version, Windows build, affected component, and minimal steps with redacted diagnostics. No promise of a supported public release channel is implied.
+Report findings privately to the maintainer through an established trusted channel. Do not publish secrets or personal logs. Include version, Windows build, affected component, and minimal steps with redacted diagnostics.

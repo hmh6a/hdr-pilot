@@ -33,6 +33,9 @@ jobs:
         run: |
           if ($env:RELEASE_TAG -notmatch '^v(\d+\.\d+\.\d+(?:-[a-zA-Z0-9.]+)?)$') { throw 'Invalid release tag' }
           ./scripts/Package.ps1 -Version $Matches[1]
+      - name: Verify installation, upgrade and uninstall
+        shell: pwsh
+        run: ./scripts/Test-Installer.ps1 -Installer (Get-ChildItem artifacts/*-Setup.exe).FullName
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: hdr-pilot-win-x64
@@ -69,8 +72,8 @@ jobs:
           prerelease=()
           if [[ "$RELEASE_TAG" == *-* ]]; then prerelease=(--prerelease); fi
           cat > release-notes.txt <<'NOTES'
-          Windows 11 x64 portable release. Download and run the EXE directly; no installer, ZIP extraction or separate .NET installation is needed.
+          Recommended: download HDRPilot-*-win-x64-Setup.exe. The installer lets you choose the installation folder and adds a Start menu shortcut and an uninstall entry. No separate .NET installation is needed.
 
-          For the optional browser companion and diagnostics, download and extract the full ZIP package. SHA-256 checksums are provided for both downloads. This build is unsigned. See README.md for compatibility and hardware-validation limits.
+          The installer includes the browser companion and diagnostics. The standalone EXE and full ZIP remain available for portable use. SHA-256 checksums are provided for every download. This build is unsigned. See README.md for compatibility and hardware-validation limits.
           NOTES
           gh release create "$RELEASE_TAG" --verify-tag --title "HDR Pilot $RELEASE_TAG" --notes-file release-notes.txt --generate-notes "${prerelease[@]}" HDRPilot-*.exe HDRPilot-*.exe.sha256 HDRPilot-*.zip HDRPilot-*.zip.sha256

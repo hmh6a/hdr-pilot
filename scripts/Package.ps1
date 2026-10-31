@@ -36,10 +36,16 @@ try {
     "{0}  {1}" -f (Get-FileHash -LiteralPath $standalone -Algorithm SHA256).Hash.ToLowerInvariant(), ([IO.Path]::GetFileName($standalone)) | Set-Content -LiteralPath ($standalone + '.sha256') -Encoding ascii
     $sums = Get-ChildItem -LiteralPath $destination -Filter *.exe | Sort-Object Name | ForEach-Object { "{0}  {1}" -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $_.Name }
     $sums | Set-Content -LiteralPath (Join-Path $destination 'SHA256SUMS.txt') -Encoding ascii
+    $compiler = & (Join-Path $PSScriptRoot 'Get-InnoSetup.ps1')
+    & $compiler "/DAppVersion=$Version" "/DPackageDir=$destination" "/DOutputDir=$artifacts" (Join-Path $root 'installer/HDRPilot.iss')
+    if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
+    $setup = Join-Path $artifacts "HDRPilot-$Version-win-x64-Setup.exe"
+    "{0}  {1}" -f (Get-FileHash -LiteralPath $setup -Algorithm SHA256).Hash.ToLowerInvariant(), ([IO.Path]::GetFileName($setup)) | Set-Content -LiteralPath ($setup + '.sha256') -Encoding ascii
     $zip = Join-Path $artifacts "HDRPilot-$Version-win-x64.zip"
     Compress-Archive -LiteralPath $destination -DestinationPath $zip -Force
     "{0}  {1}" -f (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant(), ([IO.Path]::GetFileName($zip)) | Set-Content -LiteralPath ($zip + '.sha256') -Encoding ascii
     Write-Output "Portable release: $destination"
     Write-Output "ZIP: $zip"
     Write-Output "Standalone EXE: $standalone"
+    Write-Output "Installer: $setup"
 } finally { Pop-Location }

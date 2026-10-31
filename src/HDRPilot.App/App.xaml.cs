@@ -17,6 +17,7 @@ public partial class App : Application
 {
     private ServiceProvider? services;
     private Mutex? instance;
+    private Mutex? installationGuard;
     private EventWaitHandle? activation;
     private DispatcherTimer? activationTimer;
     private TrayService? tray;
@@ -29,6 +30,7 @@ public partial class App : Application
         instance = new Mutex(true, "Local\\HDRPilot." + identity, out var first);
         activation = new EventWaitHandle(false, EventResetMode.AutoReset, "Local\\HDRPilot.Activate." + identity);
         if (!first) { activation.Set(); Shutdown(); return; }
+        installationGuard = new Mutex(false, "Local\\HDRPilot.Installation");
         try
         {
         var collection = new ServiceCollection();
@@ -74,5 +76,5 @@ public partial class App : Application
         if (MainWindow is MainWindow window) { window.AllowClose = true; window.Close(); }
         if (services is not null) await services.DisposeAsync(); services = null; Shutdown();
     }
-    protected override void OnExit(ExitEventArgs e) { activation?.Dispose(); instance?.Dispose(); base.OnExit(e); }
+    protected override void OnExit(ExitEventArgs e) { activation?.Dispose(); instance?.Dispose(); installationGuard?.Dispose(); base.OnExit(e); }
 }

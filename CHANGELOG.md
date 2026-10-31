@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 — 2026-10-31
+
+Added a Windows Setup EXE with a visible installation-folder picker, Start menu shortcut, optional desktop shortcut and Apps & features uninstaller. Installation is per-user and includes the browser companion and diagnostics. Updates and uninstallations ask the user to exit a running application; uninstall preserves settings and removes only this installation's startup entry.
+
 ## 0.1.1 — 2026-10-31
 
 Added a directly downloadable self-contained Windows EXE and its SHA-256 checksum to GitHub Releases and CI artifacts. The full ZIP remains available for the optional browser companion and diagnostics. The UI now displays the actual build version.

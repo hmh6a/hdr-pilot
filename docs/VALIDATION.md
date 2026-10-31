@@ -1,5 +1,12 @@
 # Validation record — 2026-10-29
 
+## Windows installer verification — 2026-10-31
+
+- Version 0.1.2 builds with 0 warnings and 0 errors; 62 unit tests passed and the opt-in hardware query was skipped.
+- The Setup EXE installed into a custom path containing spaces and Arabic characters. The installed application hash matched the standalone executable; browser/native-host files, diagnostics, Start menu shortcut and uninstall registration were present.
+- Reinstalling without a destination override reused the selected folder. Uninstall removed the installed program and registration while preserving an extra user-created file and the existing application settings.
+- The Arabic wizard was opened and its editable destination field and Browse button were visually verified. The interactive preview was cancelled; no additional installation was made.
+
 ## HDR Pilot rename verification — 2026-10-31
 
 - Release build: 0 warnings and 0 errors. Tests: 62 passed, 0 failed, 1 opt-in hardware test skipped.
