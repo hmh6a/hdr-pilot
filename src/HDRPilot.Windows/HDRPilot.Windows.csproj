@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup><ProjectReference Include="../HDRPilot.Core/HDRPilot.Core.csproj" /></ItemGroup>
+</Project>

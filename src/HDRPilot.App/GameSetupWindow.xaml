@@ -1,0 +1,30 @@
+<Window x:Class="HDRPilot.App.GameSetupWindow"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Style="{StaticResource {x:Type Window}}" Title="إعداد لعبة · HDR Pilot" Width="680" Height="740" MinWidth="570" MinHeight="620" WindowStartupLocation="CenterOwner" FlowDirection="RightToLeft">
+ <Grid Margin="28">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <StackPanel><TextBlock Text="HDR للعبتك، بدون تعقيد." Style="{StaticResource PageTitle}"/><TextBlock x:Name="GameTitle" FontSize="22" Foreground="{StaticResource Accent}" FlowDirection="LeftToRight" TextAlignment="Right" Margin="0,0,0,20"/></StackPanel>
+  <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+   <StackPanel Margin="0,0,8,0">
+    <TextBlock Text="١. ملف اللعبة" Style="{StaticResource SectionTitle}" Margin="0,0,0,4"/>
+    <TextBlock x:Name="ChoiceHint" Style="{StaticResource MutedText}"/>
+    <ComboBox x:Name="ExecutableChoice" DisplayMemberPath="Label" FlowDirection="LeftToRight" AutomationProperties.Name="ملف اللعبة" SelectionChanged="ChoiceChanged" MaxDropDownHeight="260"/>
+    <Button Content="اللعبة مفتوحة؟ تحديث الكشف" Click="RefreshClicked" HorizontalAlignment="Right"/>
+    <TextBlock Text="٢. الشاشة" Style="{StaticResource SectionTitle}" Margin="0,14,0,4"/>
+    <ComboBox x:Name="Target" DisplayMemberPath="Name" AutomationProperties.Name="شاشة اللعبة"/>
+    <Border Style="{StaticResource CardBorder}" Padding="16"><StackPanel>
+     <TextBlock Text="ماذا سيحدث؟" FontWeight="SemiBold" Margin="0,0,0,6"/>
+     <TextBlock x:Name="Behavior" Style="{StaticResource MutedText}"/>
+     <TextBlock Text="يشغّل HDR في ويندوز. إعداد HDR داخل اللعبة يبقى من إعدادات اللعبة نفسها." Style="{StaticResource MutedText}" FontSize="12" Margin="0,8,0,0"/>
+    </StackPanel></Border>
+    <Expander Header="خيارات إضافية — اختيارية" Foreground="{StaticResource Ink}" Margin="0,0,0,12">
+     <StackPanel Margin="0,12,0,0"><WrapPanel><Button Content="اختيار ملف يدويًا…" Click="BrowseClicked"/><Button x:Name="AdvancedButton" Content="الإعدادات المتقدمة…" Click="AdvancedClicked" IsEnabled="False"/></WrapPanel>
+      <CheckBox x:Name="ResumeAutomation" Content="تشغيل الوضع التلقائي واستئناف التحكم بالشاشات بعد الحفظ" IsChecked="True"/>
+      <TextBlock Text="عند ترك هذا الخيار مفعّلًا، تُستأنف الأتمتة إذا كانت متوقفة أو تم تغيير HDR يدويًا." Style="{StaticResource MutedText}" FontSize="12"/>
+     </StackPanel>
+    </Expander>
+   </StackPanel>
+  </ScrollViewer>
+  <StackPanel Grid.Row="2" Margin="0,12,0,0"><TextBlock x:Name="ErrorText" Foreground="#FFB6AA" Margin="0,0,0,8"/><CheckBox x:Name="ProfileEnabled" Content="تفعيل هذا البروفايل" IsChecked="True"/><TextBlock Text="الإعدادات الأساسية جاهزة. بعد الحفظ، افتح اللعبة وراقب حالتها في Displays." Style="{StaticResource MutedText}" FontSize="12" Margin="0,0,0,10"/><WrapPanel><Button x:Name="SaveButton" Content="حفظ البروفايل" Click="SaveClicked" Style="{StaticResource PrimaryButton}" IsDefault="True" IsEnabled="False"/><Button Content="إلغاء" IsCancel="True"/></WrapPanel></StackPanel>
+ </Grid>
+</Window>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType><UseWPF>true</UseWPF><UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>HDRPilot</AssemblyName><ApplicationManifest>app.manifest</ApplicationManifest><ApplicationIcon>../../assets/hdrpilot.ico</ApplicationIcon>
+    <PublishSingleFile>true</PublishSingleFile><IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <PublishTrimmed>false</PublishTrimmed><PublishReadyToRun>false</PublishReadyToRun>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../HDRPilot.Windows/HDRPilot.Windows.csproj" />
+    <ProjectReference Include="../HDRPilot.Infrastructure/HDRPilot.Infrastructure.csproj" />
+    <ProjectReference Include="../HDRPilot.Engine/HDRPilot.Engine.csproj" />
+    <ProjectReference Include="../HDRPilot.GameDetection/HDRPilot.GameDetection.csproj" />
+    <ProjectReference Include="../HDRPilot.VideoDetection/HDRPilot.VideoDetection.csproj" />
+    <ProjectReference Include="../HDRPilot.BrowserBridge/HDRPilot.BrowserBridge.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+  </ItemGroup>
+  <ItemGroup><Using Remove="System.Windows.Forms" /><Using Remove="System.Drawing" /></ItemGroup>
+</Project>

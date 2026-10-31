@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><OutputType>Exe</OutputType><PublishSingleFile>true</PublishSingleFile><IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract><PublishTrimmed>false</PublishTrimmed></PropertyGroup>
+ <ItemGroup><ProjectReference Include="../HDRPilot.BrowserBridge/HDRPilot.BrowserBridge.csproj" /></ItemGroup>
+</Project>

@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../HDRPilot.Windows/HDRPilot.Windows.csproj" /><ProjectReference Include="../HDRPilot.Engine/HDRPilot.Engine.csproj" /></ItemGroup>
+</Project>
